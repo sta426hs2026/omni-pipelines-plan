@@ -8,7 +8,7 @@ version: "1.2"
 api_version: "0.4.0"
 
 provenance:
-  canonical_url: https://raw.githubusercontent.com/omni-eccb2026/pipelines-plan/refs/heads/main/benchmark.yaml
+  canonical_url: https://raw.githubusercontent.com/sta426hs2026/omni-pipelines-plan/refs/heads/main/benchmark.yaml
 
 # Available software environments
 software_backend: conda
@@ -22,23 +22,6 @@ software_environments:
   metrics:
     name: conda env for Python + metrics packages
     conda: envs/metrics.yml
-
-#metric_collectors:
-#  - id: report
-#    name: Gathers and processes metrics from different pipelines
-#    software_environment: r_apptainer
-#    repository:
-#      url: https://github.com/omni-eccb2026/pipelines-report
-#      commit: "404d023"
-#    inputs:
-#      - metrics.metrics
-#    outputs:
-#      - id: report.metrics
-#        path: "report/metrics.tsv"
-#      - id: report.timings
-#        path: "report/timings.tsv"
-#      - id: report.plots
-#        path: "report/plots.html"
 
 stages:
   - id: datasets
@@ -54,7 +37,7 @@ stages:
         name: loads scRNA datasets
         software_environment: r_osta
         repository:
-          url: https://github.com/omni-eccb2026/datasets
+          url: https://github.com/sta426hs2026/omni-datasets
           commit: 65d18ae
         parameters:
           - dataset_name: ["sc-mix"]
@@ -77,7 +60,7 @@ stages:
         name: run R pipelines
         software_environment: r_osta
         repository:
-          url: https://github.com/omni-eccb2026/pipelines-r
+          url: https://github.com/sta426hs2026/omni-pipelines-r
           commit: 33129f6
         parameters:
           - method_name: ["osca"]
@@ -96,7 +79,7 @@ stages:
         name: run python pipelines
         software_environment: scanpy
         repository:
-          url: https://github.com/omni-eccb2026/pipelines-py
+          url: https://github.com/sta426hs2026/omni-pipelines-py
           commit: 104a39d
         parameters:
           - method_name: ["scanpy"]
@@ -120,5 +103,5 @@ stages:
         name: compute clustering metrics
         software_environment: metrics
         repository:
-          url: https://github.com/omni-eccb2026/metrics
+          url: https://github.com/sta426hs2026/omni-metrics
           commit: a97c3d8

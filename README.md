@@ -1,8 +1,8 @@
 # Benchmarking scRNA pipelines (simplified for ECCB 2026 Workshop)
 
-[![Open in OBEditor](https://img.shields.io/badge/open-obeditor-0078d4?style=flat)](https://omnibenchmark.github.io/obeditor?url=https://github.com/omni-eccb2026/pipelines-plan/blob/main/benchmark.yaml)
+[![Open in OBEditor](https://img.shields.io/badge/open-obeditor-0078d4?style=flat)](https://omnibenchmark.github.io/obeditor?url=https://github.com/sta426hs2026/omni-pipelines-plan/blob/main/benchmark.yaml)
 
-This repo contains a single-cell RNA-seq (scRNA-seq) pipelines benchmark created using [OmniBenchmark](https://omnibenchmark.org), but trimmed for the purposes of the [ECCB 2026 workshop](https://eccb2026.org/tutorials-workshops#w1-constructing-standardized-benchmarks-using-omnibenchmark).
+This repo contains a single-cell RNA-seq (scRNA-seq) pipelines benchmark created using [OmniBenchmark](https://omnibenchmark.org), but trimmed for the purposes of the [STA 426 course](https://github.com/sta426hs2026/material).
 
 ## Installing `ob` (Omnibenchmark)
 
@@ -11,12 +11,12 @@ OmniBenchmark is required to run this pipeline and can be installed following [t
 ```{bash}
 conda create -n omni python=3.12 -y
 conda activate omni
-pip install omnibenchmark==0.6.0
+pip install omnibenchmark==0.7.0
 
 ob --version
 ```
 
-To run a benchmark (e.g., if you've created the conda environment but are in a new shell), you will need to have a software environment with `ob` activated (e.g., with `conda`):
+To run a benchmark (e.g., if you've created the conda environment but are now in a new shell), you will need to activate the software environment where you installed `ob`:
 
 ```{bash}
 conda activate omni
@@ -25,12 +25,12 @@ conda activate omni
 ## Quick start
 
 ```{bash}
-git clone https://github.com/omni-eccb2026/pipelines-plan.git
-cd pipelines-plan
+git clone https://github.com/sta426hs2026/omni-pipelines-plan.git
+cd omni-pipelines-plan
 ob validate plan benchmark.yaml
 ob run benchmark.yaml -c 2
 
-#ob run benchmark.yaml -- --apptainer-args='--nv'  # not needed for ECCB workshop
+#ob run benchmark.yaml -- --apptainer-args='--nv'  # not needed now, but might be later
 ```
 
 ## Other useful commands (run one by one, do not cut-paste)
@@ -49,7 +49,7 @@ prlimit --rss=64g --cpu=10000 ob run benchmark.yaml -c 8 --unpinned --continue-o
 The `ob --help` command gives a full description of the verbs that are implemented.
 
 ```{bash}
-❯ ob --help                            
+❯ ob --help   
 Usage: ob [OPTIONS] COMMAND [ARGS]...
 
   OmniBenchmark Command Line Interface (CLI).
@@ -85,8 +85,7 @@ Commands:
 Help pages for all subcommands are also available:
 
 ```{bash}
-❯ ob run --help
-
+❯ ob run --help                                                          
 Usage: ob run [OPTIONS] BENCHMARK [SNAKEMAKE_ARGS]...
 
   Run a benchmark.
@@ -136,6 +135,25 @@ Options:
   --telemetry-output PATH  Write telemetry to file instead of stdout. Allows
                            Rich progress to remain active. Implies
                            --telemetry.
+  --with-capability NAME   Declare a host capability available on this machine
+                           (repeatable). Modules whose requires_capabilities
+                           are not all provided are pruned. Example: --with-
+                           capability gpu --with-capability large_mem
+  --until TEXT             Stop the pipeline at and including the named stage.
+                           Only the named stage and its transitive ancestors
+                           are kept in the resolved DAG, and metric collectors
+                           whose inputs reference pruned stages are skipped.
+  --filter FILE|BLOB       Run a slice of the benchmark defined by an obfilter
+                           selection: a path to a YAML/JSON file of picks, a
+                           file containing a packed blob, or an inline packed
+                           blob. Prunes the DAG to the picked
+                           stages/modules/param-combos. Incompatible with
+                           -m/--module.
+  --allow-drift            With --filter: if the benchmark has changed since
+                           the filter was made and some selected
+                           stages/modules/parameters no longer exist, run the
+                           part that still matches instead of erroring.
+                           Skipped selections are listed as warnings.
   --help                   Show this message and exit.
 ```
 
